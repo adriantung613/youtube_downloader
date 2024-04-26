@@ -27,6 +27,10 @@ def link_is_valid(Url):
     return False
 
 
+def convert_playlist_video_url_to_video_url(Url):
+    return Url[:Url.find("&list")]
+
+
 def link_is_playlist(Url):
     if Url.find("list") != -1 and Url.find("watch") == -1:
         return True
@@ -120,7 +124,6 @@ def connection_is_ok(host='http://google.com'):
             request.urlopen(host, timeout=5)
             return True
         except:
-            print("connection problem occur, please check the connection")
             return False
 
 
@@ -526,6 +529,7 @@ if __name__ == "__main__":
                              status="existed_directory", Item_list=item_list)
 
             for URL in urls:
+                URL = convert_playlist_video_url_to_video_url(URL)
                 if not video_is_valid(URL):
                     print(f"'{URL}' is invalid video")
                     item_list = item_list_update(path=current_path, link=URL, status="invalid_video",
@@ -659,6 +663,7 @@ if __name__ == "__main__":
                     continue
 
                 for URL in urls:
+                    URL = convert_playlist_video_url_to_video_url(URL)
                     if link_is_really_playlist:
                         video_title = get_video_title(URL, item_list)
 
