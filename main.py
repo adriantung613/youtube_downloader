@@ -28,6 +28,9 @@ def link_is_valid(Url):
 
 
 def convert_playlist_video_url_to_video_url(Url):
+    if Url.find("&list") == -1:
+        return Url
+
     return Url[:Url.find("&list")]
 
 
